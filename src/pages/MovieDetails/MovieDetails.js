@@ -1,13 +1,13 @@
-import { Cast } from 'components/Cast/Cast';
 import { FilmCard } from 'components/FilmCard/FilmCard';
-import { Reviews } from 'components/Reviews/Reviews';
 import { getFilmCard } from 'components/services/API';
 import { useEffect, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, Outlet, useParams, useLocation } from 'react-router-dom';
+import { LinkBox } from './MovieDetails.styled';
 
 export const MovieDetails = () => {
   const [film, setFilm] = useState({});
   const { homeId } = useParams();
+  const location = useLocation();
 
   useEffect(() => {
     async function fetchFilmCard() {
@@ -17,19 +17,30 @@ export const MovieDetails = () => {
         console.log(error);
       }
     }
+
     fetchFilmCard();
   }, [homeId]);
+
+  const backLinkHref = location.state?.from ?? '/';
 
   return (
     <>
       <button type="button">
-        <NavLink to={'/'}>Go back</NavLink>
+        <NavLink to={backLinkHref}>Go back</NavLink>
       </button>
       <FilmCard film={film} />
-      <div>
-        <Cast />
-        <Reviews />
-      </div>
+      <LinkBox>
+        <p>Additional information</p>
+        <ul>
+          <li>
+            <NavLink to={'cast'}>Cast</NavLink>
+          </li>
+          <li>
+            <NavLink to={'reviews'}>Reviews</NavLink>
+          </li>
+        </ul>
+      </LinkBox>
+      <Outlet />
     </>
   );
 };
