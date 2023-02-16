@@ -1,4 +1,12 @@
-import { Box } from './FilmCard.styled';
+import {
+  Box,
+  Genres,
+  GenresTitle,
+  Overview,
+  OverviewTitle,
+  Score,
+  Title,
+} from './FilmCard.styled';
 
 export const FilmCard = ({
   film: {
@@ -17,19 +25,19 @@ export const FilmCard = ({
         <img
           src={`https://image.tmdb.org/t/p/w500${poster_path}`}
           alt={tagline}
-          width="200px"
-          height="250px"
+          width="400px"
+          height="450px"
         />
       </div>
       <div>
-        <h1>
+        <Title>
           {original_title} ({new Date(release_date).getFullYear()})
-        </h1>
-        <p>User Score: {Math.round(vote_average * 10)}%</p>
-        <h2>Overview</h2>
-        <p>{overview}</p>
-        <h2>Genres</h2>
-        <p>{genres && genres.map(genre => `${genre.name} `)}</p>
+        </Title>
+        <Score>User Score: {Math.round(vote_average * 10)}%</Score>
+        <OverviewTitle>Overview</OverviewTitle>
+        <Overview>{overview}</Overview>
+        <GenresTitle>Genres</GenresTitle>
+        <Genres>{genres && genres.map(genre => `${genre.name} `)}</Genres>
       </div>
     </Box>
   );

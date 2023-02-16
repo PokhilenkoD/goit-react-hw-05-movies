@@ -1,10 +1,6 @@
 import { Layout } from 'components/Layout/Layout';
-import { MovieDetails } from 'pages/MovieDetails/MovieDetails';
 import { Home } from 'pages/Home/Home.js';
 import { Route, Routes } from 'react-router-dom';
-import { Cast } from 'components/Cast/Cast';
-import { Reviews } from 'components/Reviews/Reviews';
-// import { Movies } from 'pages/Movies/Movies';
 import { lazy } from 'react';
 
 export const App = () => {
@@ -12,6 +8,22 @@ export const App = () => {
     import('../../pages/Movies/Movies').then(module => ({
       ...module,
       default: module.Movies,
+    }))
+  );
+  const MovieDetails = lazy(() =>
+    import('../../pages/MovieDetails/MovieDetails').then(module => ({
+      ...module,
+      default: module.MovieDetails,
+    }))
+  );
+
+  const Cast = lazy(() =>
+    import('../Cast/Cast').then(module => ({ ...module, default: module.Cast }))
+  );
+  const Reviews = lazy(() =>
+    import('../Reviews/Reviews').then(module => ({
+      ...module,
+      default: module.Reviews,
     }))
   );
 

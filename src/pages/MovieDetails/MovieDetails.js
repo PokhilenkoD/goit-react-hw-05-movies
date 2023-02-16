@@ -2,19 +2,30 @@ import { FilmCard } from 'components/FilmCard/FilmCard';
 import { getFilmCard } from 'components/services/API';
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useParams, useLocation } from 'react-router-dom';
-import { LinkBox } from './MovieDetails.styled';
+import {
+  AddiionalBox,
+  BackLink,
+  ButtonBack,
+  List,
+} from './MovieDetails.styled';
+import { IoIosArrowRoundBack } from 'react-icons/io';
+import { PuffLoader } from 'components/Loader/Loader';
 
 export const MovieDetails = () => {
   const [film, setFilm] = useState({});
   const { homeId } = useParams();
   const location = useLocation();
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     async function fetchFilmCard() {
       try {
+        setLoader(prevState => !prevState);
         await getFilmCard(homeId).then(resp => setFilm(resp));
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoader(prevState => !prevState);
       }
     }
 
@@ -25,21 +36,25 @@ export const MovieDetails = () => {
 
   return (
     <>
-      <button type="button">
-        <NavLink to={backLinkHref}>Go back</NavLink>
-      </button>
+      {loader && <PuffLoader />}
+      <ButtonBack type="button">
+        <BackLink to={backLinkHref}>
+          <IoIosArrowRoundBack size={'15px'} />
+          Go back
+        </BackLink>
+      </ButtonBack>
       <FilmCard film={film} />
-      <LinkBox>
+      <AddiionalBox>
         <p>Additional information</p>
-        <ul>
+        <List>
           <li>
             <NavLink to={'cast'}>Cast</NavLink>
           </li>
           <li>
             <NavLink to={'reviews'}>Reviews</NavLink>
           </li>
-        </ul>
-      </LinkBox>
+        </List>
+      </AddiionalBox>
       <Outlet />
     </>
   );

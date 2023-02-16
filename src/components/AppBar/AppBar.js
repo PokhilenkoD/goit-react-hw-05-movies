@@ -1,15 +1,14 @@
-import { NavLink } from 'react-router-dom';
-import { HeaderApp } from './AppBar.styled';
+import { HeaderApp, Link } from './AppBar.styled';
 
 export const AppBar = () => {
   return (
     <>
       <HeaderApp>
         <nav>
-          <NavLink to="/">Home</NavLink>
+          <Link to="/">Home</Link>
         </nav>
         <nav>
-          <NavLink to="movies">Movies</NavLink>
+          <Link to="movies">Movies</Link>
         </nav>
       </HeaderApp>
     </>
