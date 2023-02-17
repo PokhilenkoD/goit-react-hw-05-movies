@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { NavLink, useLocation, useSearchParams } from 'react-router-dom';
 import { Input, SearchForm } from './SearchMovies.styled';
 import { PuffLoader } from 'components/Loader/Loader';
+import toast, { Toaster } from 'react-hot-toast';
 
 export const SearchMovies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,12 +32,20 @@ export const SearchMovies = () => {
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       {loader && <PuffLoader />}
       <Formik
         initialValues={{ query: '' }}
         onSubmit={(values, actions) => {
-          setQuery(values.query.trim());
-          setSearchParams(values.trim());
+          if (!values.query) {
+            toast.error(
+              'Please enter the title of the movie in the search bar.'
+            );
+            return;
+          }
+          console.log(values);
+          setQuery(values.query);
+          setSearchParams(values);
           actions.resetForm();
         }}
       >

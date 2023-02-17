@@ -30,7 +30,7 @@ export const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="/" element={<Home />} />
+        <Route index element={<Home />} />
         <Route path="movies" element={<Movies />}></Route>
         <Route path="movies/:homeId" element={<MovieDetails />}>
           <Route path="cast" element={<Cast />} />
